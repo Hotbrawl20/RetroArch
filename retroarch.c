@@ -12297,8 +12297,8 @@ static bool command_get_status(const char* arg)
 
 static bool command_show_osd_msg(const char* arg)
 {
-    runloop_msg_queue_push(arg, 1, 180, false, NULL,
-          MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+  //  runloop_msg_queue_push(arg, 1, 180, false, NULL,
+         // MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
     return true;
 }
 
@@ -12462,10 +12462,10 @@ bool retroarch_apply_shader(
 #ifdef HAVE_GFX_WIDGETS
          if (p_rarch->widgets_active)
             gfx_widget_set_message(msg);
-         else
+         
 #endif
-            runloop_msg_queue_push(msg, 1, 120, true, NULL,
-                  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+           // runloop_msg_queue_push(msg, 1, 120, true, NULL,
+            //      MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       }
 
       RARCH_LOG("%s \"%s\".\n",
@@ -12488,9 +12488,9 @@ bool retroarch_apply_shader(
             ' ',
             sizeof(msg));
 
-      runloop_msg_queue_push(
-            msg, 1, 180, true, NULL,
-            MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_ERROR);
+     // runloop_msg_queue_push(
+          //  msg, 1, 180, true, NULL,
+          //  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_ERROR);
    }
 
    return ret;
@@ -13247,11 +13247,11 @@ static void handle_translation_cb(
          if (!ai_res)
          {
             RARCH_LOG("Video driver not supported for AI Service.");
-            runloop_msg_queue_push(
+          //  runloop_msg_queue_push(
                /* msg_hash_to_str(MSG_VIDEO_DRIVER_NOT_SUPPORTED), */
-               "Video driver not supported.",
-               1, 180, true,
-               NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+            //   "Video driver not supported.",
+           //    1, 180, true,
+            //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          else if (gfx_widgets_paused)
          {
@@ -14239,7 +14239,7 @@ static void command_event_set_volume(
             p_rarch->audio_driver_mute_enable);
    else
 #endif
-      runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+    //  runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 
    RARCH_LOG("%s\n", msg);
 
@@ -14269,7 +14269,7 @@ static void command_event_set_mixer_volume(
    snprintf(msg, sizeof(msg), "%s: %.1f dB",
          msg_hash_to_str(MSG_AUDIO_VOLUME),
          new_volume);
-   runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+  // runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    RARCH_LOG("%s\n", msg);
 
    audio_set_float(AUDIO_ACTION_VOLUME_GAIN, new_volume);
@@ -14949,7 +14949,7 @@ static bool command_event_save_core_config(
 
    if (string_is_empty(config_dir))
    {
-      runloop_msg_queue_push(msg_hash_to_str(MSG_CONFIG_DIRECTORY_NOT_SET), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+      //runloop_msg_queue_push(msg_hash_to_str(MSG_CONFIG_DIRECTORY_NOT_SET), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       RARCH_ERR("[config] %s\n", msg_hash_to_str(MSG_CONFIG_DIRECTORY_NOT_SET));
       free (config_dir);
       return false;
@@ -15018,7 +15018,7 @@ static bool command_event_save_core_config(
 #endif
 
    if (!string_is_empty(msg))
-      runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+      //runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 
    p_rarch->runloop_overrides_active = overrides_active;
 
@@ -15071,8 +15071,8 @@ static void command_event_save_current_config(
          break;
    }
 
-   if (!string_is_empty(msg))
-      runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+   //if (!string_is_empty(msg))
+      //runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 }
 #endif
 
@@ -15205,7 +15205,7 @@ static bool command_event_main_state(
                MSG_CORE_DOES_NOT_SUPPORT_SAVESTATES), sizeof(msg));
 
    if (push_msg)
-      runloop_msg_queue_push(msg, 2, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(msg, 2, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    RARCH_LOG("%s\n", msg);
 
    free(state_path);
@@ -15282,9 +15282,9 @@ static void retroarch_pause_checks(struct rarch_state *p_rarch)
 #if defined(HAVE_GFX_WIDGETS)
       if (!widgets_active)
 #endif
-         runloop_msg_queue_push(msg_hash_to_str(MSG_PAUSED), 1,
-               1, true,
-               NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+         //runloop_msg_queue_push(msg_hash_to_str(MSG_PAUSED), 1,
+             //  1, true,
+            //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 
 
       if (!is_idle)
@@ -15531,7 +15531,7 @@ bool command_event(enum event_command cmd, void *data)
                   snprintf(msg, sizeof(msg),"%s: %dx%d",
                         msg_hash_to_str(MENU_ENUM_LABEL_VALUE_SCREEN_RESOLUTION),
                         width, height);
-               runloop_msg_queue_push(msg, 1, 100, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+              // runloop_msg_queue_push(msg, 1, 100, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             }
          }
 #endif
@@ -15621,7 +15621,7 @@ bool command_event(enum event_command cmd, void *data)
          rcheevos_hardcore_paused = false;
 #endif
          RARCH_LOG("%s.\n", msg_hash_to_str(MSG_RESET));
-         runloop_msg_queue_push(msg_hash_to_str(MSG_RESET), 1, 120, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+        // runloop_msg_queue_push(msg_hash_to_str(MSG_RESET), 1, 120, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 
          core_reset();
 #ifdef HAVE_CHEEVOS
@@ -15855,10 +15855,10 @@ bool command_event(enum event_command cmd, void *data)
                gfx_widget_volume_update_and_show(
                      settings->floats.audio_volume,
                      p_rarch->audio_driver_mute_enable);
-            else
+            
 #endif
-               runloop_msg_queue_push(msg, 1, 180, true, NULL,
-                     MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+             //  runloop_msg_queue_push(msg, 1, 180, true, NULL,
+                 //    MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_SEND_DEBUG_INFO:
@@ -16128,7 +16128,7 @@ bool command_event(enum event_command cmd, void *data)
          break;
       case CMD_EVENT_SHUTDOWN:
 #if defined(__linux__) && !defined(ANDROID)
-         runloop_msg_queue_push(msg_hash_to_str(MSG_VALUE_SHUTTING_DOWN), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+        // runloop_msg_queue_push(msg_hash_to_str(MSG_VALUE_SHUTTING_DOWN), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          command_event(CMD_EVENT_MENU_SAVE_CURRENT_CONFIG, NULL);
          command_event(CMD_EVENT_QUIT, NULL);
          system("shutdown -P now");
@@ -16136,7 +16136,7 @@ bool command_event(enum event_command cmd, void *data)
          break;
       case CMD_EVENT_REBOOT:
 #if defined(__linux__) && !defined(ANDROID)
-         runloop_msg_queue_push(msg_hash_to_str(MSG_VALUE_REBOOTING), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+        // runloop_msg_queue_push(msg_hash_to_str(MSG_VALUE_REBOOTING), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          command_event(CMD_EVENT_MENU_SAVE_CURRENT_CONFIG, NULL);
          command_event(CMD_EVENT_QUIT, NULL);
          system("shutdown -r now");
@@ -16155,9 +16155,9 @@ bool command_event(enum event_command cmd, void *data)
             if (playlist_size(g_defaults.content_favorites) >=
                 playlist_capacity(g_defaults.content_favorites))
             {
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_ADD_TO_FAVORITES_FAILED), 1, 180, true, NULL,
-                     MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_ERROR);
+               //runloop_msg_queue_push(
+                    // msg_hash_to_str(MSG_ADD_TO_FAVORITES_FAILED), 1, 180, true, NULL,
+                    // MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_ERROR);
                return false;
             }
 
@@ -16187,7 +16187,7 @@ bool command_event(enum event_command cmd, void *data)
                         playlist_qsort(g_defaults.content_favorites);
 
                      playlist_write_file(g_defaults.content_favorites);
-                     runloop_msg_queue_push(msg_hash_to_str(MSG_ADDED_TO_FAVORITES), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+                    // runloop_msg_queue_push(msg_hash_to_str(MSG_ADDED_TO_FAVORITES), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                   }
                }
             }
@@ -16209,7 +16209,7 @@ bool command_event(enum event_command cmd, void *data)
             command_playlist_update_write(
                   NULL, *playlist_index, &entry);
 
-            runloop_msg_queue_push(msg_hash_to_str(MSG_RESET_CORE_ASSOCIATION), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+           // runloop_msg_queue_push(msg_hash_to_str(MSG_RESET_CORE_ASSOCIATION), 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             break;
 
          }
@@ -16447,10 +16447,10 @@ bool command_event(enum event_command cmd, void *data)
             /* If we haven't yet started, this will load on its own */
             if (!is_inited)
             {
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MENU_ENUM_LABEL_VALUE_NETPLAY_START_WHEN_LOADED),
-                     1, 480, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+              // runloop_msg_queue_push(
+                   //  msg_hash_to_str(MENU_ENUM_LABEL_VALUE_NETPLAY_START_WHEN_LOADED),
+                   //  1, 480, true,
+                   //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                return false;
             }
 
@@ -16575,11 +16575,11 @@ bool command_event(enum event_command cmd, void *data)
 #endif
                return success;
             }
-            else
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
-                     1, 120, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+            //else
+             //  runloop_msg_queue_push(
+                   //  msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
+                  //   1, 120, true,
+                  //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_DISK_EJECT_TOGGLE:
@@ -16608,11 +16608,11 @@ bool command_event(enum event_command cmd, void *data)
                menu_driver_ctl(RARCH_MENU_CTL_SET_PREVENT_POPULATE, NULL);
 #endif
             }
-            else
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
-                     1, 120, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+            //else
+            //   runloop_msg_queue_push(
+              //       msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
+                //     1, 120, true,
+                 //    NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_DISK_NEXT:
@@ -16632,11 +16632,11 @@ bool command_event(enum event_command cmd, void *data)
 
                disk_control_set_index_next(&sys_info->disk_control, verbose);
             }
-            else
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
-                     1, 120, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+           // else
+              // runloop_msg_queue_push(
+                //     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
+               //      1, 120, true,
+                 //    NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_DISK_PREV:
@@ -16656,11 +16656,11 @@ bool command_event(enum event_command cmd, void *data)
 
                disk_control_set_index_prev(&sys_info->disk_control, verbose);
             }
-            else
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
-                     1, 120, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+          //  else
+              // runloop_msg_queue_push(
+                 //    msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
+                //     1, 120, true,
+                 //    NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_DISK_INDEX:
@@ -16675,11 +16675,11 @@ bool command_event(enum event_command cmd, void *data)
              * need to print info message to screen */
             if (disk_control_enabled(&sys_info->disk_control))
                disk_control_set_index(&sys_info->disk_control, *index, false);
-            else
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
-                     1, 120, true,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+           // else
+              // runloop_msg_queue_push(
+                   //  msg_hash_to_str(MSG_CORE_DOES_NOT_SUPPORT_DISK_OPTIONS),
+                   //  1, 120, true,
+                  //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
          break;
       case CMD_EVENT_RUMBLE_STOP:
@@ -16744,10 +16744,10 @@ bool command_event(enum event_command cmd, void *data)
                video_driver_hide_mouse();
                p_rarch->input_driver_block_hotkey               = true;
                p_rarch->current_input->keyboard_mapping_blocked = true;
-               if (mode != -1)
-                  runloop_msg_queue_push(msg_hash_to_str(MSG_GAME_FOCUS_ON),
-                        1, 120, true,
-                        NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+               //if (mode != -1)
+                 // runloop_msg_queue_push(msg_hash_to_str(MSG_GAME_FOCUS_ON),
+                   //     1, 120, true,
+                   //     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             }
             else
             {
@@ -16755,10 +16755,10 @@ bool command_event(enum event_command cmd, void *data)
                video_driver_show_mouse();
                p_rarch->input_driver_block_hotkey               = false;
                p_rarch->current_input->keyboard_mapping_blocked = false;
-               if (mode != -1)
-                  runloop_msg_queue_push(msg_hash_to_str(MSG_GAME_FOCUS_OFF),
-                        1, 120, true,
-                        NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+             //  if (mode != -1)
+               //   runloop_msg_queue_push(msg_hash_to_str(MSG_GAME_FOCUS_OFF),
+                   //     1, 120, true,
+                     //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             }
 
          }
@@ -18450,10 +18450,10 @@ static void runloop_core_msg_queue_push(
 
    /* Note: Do not flush the message queue here - a core
     * may need to send multiple notifications simultaneously */
-   runloop_msg_queue_push(msg->msg,
-         msg->priority, duration_frames,
-         false, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
-         category);
+  // runloop_msg_queue_push(msg->msg,
+     //    msg->priority, duration_frames,
+     //    false, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
+     //    category);
 }
 
 /**
@@ -18617,9 +18617,9 @@ static bool rarch_environment_cb(unsigned cmd, void *data)
                   roundf((float)msg->frames / 60.0f * 1000.0f));
          else
 #endif
-            runloop_msg_queue_push(msg->msg, 3, msg->frames,
-                  true, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
-                  MESSAGE_QUEUE_CATEGORY_INFO);
+          //  runloop_msg_queue_push(msg->msg, 3, msg->frames,
+             //     true, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
+              //    MESSAGE_QUEUE_CATEGORY_INFO);
          break;
       }
 
@@ -18705,8 +18705,8 @@ static bool rarch_environment_cb(unsigned cmd, void *data)
                   if (p_rarch->widgets_active)
                      gfx_widget_set_libretro_message(&p_rarch->dispwidget_st,
                            msg->msg, msg->duration);
-                  else
-                     runloop_core_msg_queue_push(p_rarch, msg);
+                 // else
+                    // runloop_core_msg_queue_push(p_rarch, msg);
 
                   break;
 
@@ -18716,15 +18716,15 @@ static bool rarch_environment_cb(unsigned cmd, void *data)
                      gfx_widget_set_progress_message(&p_rarch->dispwidget_st,
                            msg->msg, msg->duration,
                            msg->priority, msg->progress);
-                  else
-                     runloop_core_msg_queue_push(p_rarch, msg);
+                  //else
+                   //  runloop_core_msg_queue_push(p_rarch, msg);
 
                   break;
 #endif
                /* Handle standard (queued) notifications */
                case RETRO_MESSAGE_TYPE_NOTIFICATION:
                default:
-                  runloop_core_msg_queue_push(p_rarch, msg);
+               //   runloop_core_msg_queue_push(p_rarch, msg);
                   break;
             }
          }
@@ -19273,10 +19273,10 @@ static bool rarch_environment_cb(unsigned cmd, void *data)
              * Take the easiest route out and just restart the recording. */
             if (p_rarch->recording_data)
             {
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_RESTARTING_RECORDING_DUE_TO_DRIVER_REINIT),
-                     2, 180, false,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+            //   runloop_msg_queue_push(
+                 //    msg_hash_to_str(MSG_RESTARTING_RECORDING_DUE_TO_DRIVER_REINIT),
+                 //    2, 180, false,
+                  //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                command_event(CMD_EVENT_RECORD_DEINIT, NULL);
                command_event(CMD_EVENT_RECORD_INIT, NULL);
             }
@@ -19976,8 +19976,8 @@ static bool init_libretro_symbols_custom(
                   RARCH_ERR("%s: \"%s\"\nError(s): %s\n",
                         msg_hash_to_str(MSG_FAILED_TO_OPEN_LIBRETRO_CORE),
                         path, dylib_error());
-                  runloop_msg_queue_push(msg_hash_to_str(MSG_FAILED_TO_OPEN_LIBRETRO_CORE),
-                        1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+                 // runloop_msg_queue_push(msg_hash_to_str(MSG_FAILED_TO_OPEN_LIBRETRO_CORE),
+                     //   1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                   return false;
                }
                lib_handle_local = p_rarch->lib_handle;
@@ -21099,8 +21099,8 @@ static void ui_companion_driver_msg_queue_push(
 {
    const ui_companion_driver_t *ui = p_rarch->ui_companion;
 
-   if (ui && ui->msg_queue_push)
-      ui->msg_queue_push(p_rarch->ui_companion_data, msg, priority, duration, flush);
+  // if (ui && ui->msg_queue_push)
+  //    ui->msg_queue_push(p_rarch->ui_companion_data, msg, priority, duration, flush);
 
 #ifdef HAVE_QT
    {
@@ -21109,10 +21109,10 @@ static void ui_companion_driver_msg_queue_push(
       bool desktop_menu_enable = settings->bools.desktop_menu_enable;
 
       if (desktop_menu_enable)
-         if (ui_companion_qt.msg_queue_push && qt_is_inited)
-            ui_companion_qt.msg_queue_push(
-                  p_rarch->ui_companion_qt_data,
-                  msg, priority, duration, flush);
+        // if (ui_companion_qt.msg_queue_push && qt_is_inited)
+          //  ui_companion_qt.msg_queue_push(
+          //        p_rarch->ui_companion_qt_data,
+          //        msg, priority, duration, flush);
    }
 #endif
 }
@@ -21311,10 +21311,10 @@ static void recording_dump_frame(
          RARCH_WARN("[recording] %s\n",
                msg_hash_to_str(MSG_RECORDING_TERMINATED_DUE_TO_RESIZE));
 
-         runloop_msg_queue_push(
-               msg_hash_to_str(MSG_RECORDING_TERMINATED_DUE_TO_RESIZE),
-               1, 180, true,
-               NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+        // runloop_msg_queue_push(
+              // msg_hash_to_str(MSG_RECORDING_TERMINATED_DUE_TO_RESIZE),
+             //  1, 180, true,
+             //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          command_event(CMD_EVENT_RECORD_DEINIT, NULL);
          return;
       }
@@ -21933,9 +21933,9 @@ static bool bsv_movie_init(struct rarch_state *p_rarch)
       }
 
       p_rarch->bsv_movie_state.movie_playback = true;
-      runloop_msg_queue_push(msg_hash_to_str(MSG_STARTING_MOVIE_PLAYBACK),
-            2, 180, false,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(msg_hash_to_str(MSG_STARTING_MOVIE_PLAYBACK),
+          //  2, 180, false,
+          //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       RARCH_LOG("%s.\n", msg_hash_to_str(MSG_STARTING_MOVIE_PLAYBACK));
 
       set_granularity = true;
@@ -21947,10 +21947,10 @@ static bool bsv_movie_init(struct rarch_state *p_rarch)
                p_rarch->bsv_movie_state.movie_start_path,
                RARCH_MOVIE_RECORD))
       {
-         runloop_msg_queue_push(
-               msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD),
-               1, 180, true,
-               NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+      //   runloop_msg_queue_push(
+             //  msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD),
+              // 1, 180, true,
+             //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          RARCH_ERR("%s.\n",
                msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD));
          return false;
@@ -21963,7 +21963,7 @@ static bool bsv_movie_init(struct rarch_state *p_rarch)
                msg_hash_to_str(MSG_STARTING_MOVIE_RECORD_TO),
                p_rarch->bsv_movie_state.movie_start_path);
 
-         runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+        // runloop_msg_queue_push(msg, 1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          RARCH_LOG("%s \"%s\".\n",
                msg_hash_to_str(MSG_STARTING_MOVIE_RECORD_TO),
                p_rarch->bsv_movie_state.movie_start_path);
@@ -22020,16 +22020,16 @@ static bool runloop_check_movie_init(struct rarch_state *p_rarch)
 
    if (!p_rarch->bsv_movie_state_handle)
    {
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD),
-            2, 180, true,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+    //  runloop_msg_queue_push(
+          //  msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD),
+          //  2, 180, true,
+          //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       RARCH_ERR("%s\n",
             msg_hash_to_str(MSG_FAILED_TO_START_MOVIE_RECORD));
       return false;
    }
 
-   runloop_msg_queue_push(msg, 2, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+  // runloop_msg_queue_push(msg, 2, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    RARCH_LOG("%s \"%s\".\n",
          msg_hash_to_str(MSG_STARTING_MOVIE_RECORD_TO),
          path);
@@ -22047,9 +22047,9 @@ static bool bsv_movie_check(struct rarch_state *p_rarch)
       /* Checks if movie is being played back. */
       if (!p_rarch->bsv_movie_state.movie_end)
          return false;
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_MOVIE_PLAYBACK_ENDED), 2, 180, false,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(
+          //  msg_hash_to_str(MSG_MOVIE_PLAYBACK_ENDED), 2, 180, false,
+         //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       RARCH_LOG("%s\n", msg_hash_to_str(MSG_MOVIE_PLAYBACK_ENDED));
 
       bsv_movie_deinit(p_rarch);
@@ -22064,9 +22064,9 @@ static bool bsv_movie_check(struct rarch_state *p_rarch)
    if (!p_rarch->bsv_movie_state_handle)
       return false;
 
-   runloop_msg_queue_push(
-         msg_hash_to_str(MSG_MOVIE_RECORD_STOPPED), 2, 180, true,
-         NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+ //  runloop_msg_queue_push(
+       //  msg_hash_to_str(MSG_MOVIE_RECORD_STOPPED), 2, 180, true,
+        // NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    RARCH_LOG("%s\n", msg_hash_to_str(MSG_MOVIE_RECORD_STOPPED));
 
    bsv_movie_deinit(p_rarch);
@@ -31305,8 +31305,8 @@ void video_monitor_set_refresh_rate(float hz)
 
    snprintf(msg, sizeof(msg),
          "Setting refresh rate to: %.3f Hz.", hz);
-   runloop_msg_queue_push(msg, 1, 180, false, NULL,
-         MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+  // runloop_msg_queue_push(msg, 1, 180, false, NULL,
+        // MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    RARCH_LOG("%s\n", msg);
 
    configuration_set_float(settings,
@@ -32349,7 +32349,7 @@ static void video_driver_frame(const void *data, unsigned width,
                p_rarch->runloop_msg_queue);
          RUNLOOP_MSG_QUEUE_UNLOCK();
 
-         if (msg_found)
+         /*if (msg_found)
             gfx_widgets_msg_queue_push(
                   &p_rarch->dispwidget_st,
                   NULL,
@@ -32365,7 +32365,7 @@ static void video_driver_frame(const void *data, unsigned width,
 #else
                   false
 #endif
-            );
+            );*/
       }
       /* ...otherwise, just output message via
        * regular OSD notification text (if enabled) */
@@ -32461,8 +32461,8 @@ static void video_driver_frame(const void *data, unsigned width,
       else
 #endif
       {
-         runloop_msg_queue_push(fps_text, 2, 1, true, NULL,
-               MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+         //runloop_msg_queue_push(fps_text, 2, 1, true, NULL,
+             //  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       }
    }
 
@@ -33420,9 +33420,9 @@ static bool driver_location_start(void)
       if (location_allow)
          return p_rarch->location_driver->start(p_rarch->location_data);
 
-      runloop_msg_queue_push("Location is explicitly disabled.\n",
-            1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
-            MESSAGE_QUEUE_CATEGORY_INFO);
+      //runloop_msg_queue_push("Location is explicitly disabled.\n",
+          //  1, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT,
+          //  MESSAGE_QUEUE_CATEGORY_INFO);
    }
    return false;
 }
@@ -33561,9 +33561,9 @@ static bool driver_camera_start(void)
       if (camera_allow)
          return p_rarch->camera_driver->start(p_rarch->camera_data);
 
-      runloop_msg_queue_push(
-            "Camera is explicitly disabled.\n", 1, 180, false,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+   //   runloop_msg_queue_push(
+         //   "Camera is explicitly disabled.\n", 1, 180, false,
+         //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    }
    return true;
 }
@@ -34998,7 +34998,7 @@ static void do_runahead(
          bool runahead_hide_warnings = settings->bools.run_ahead_hide_warnings;
 
          if (!runahead_hide_warnings)
-            runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_CORE_DOES_NOT_SUPPORT_SAVESTATES), 0, 2 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+         //   runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_CORE_DOES_NOT_SUPPORT_SAVESTATES), 0, 2 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          goto force_input_dirty;
       }
    }
@@ -35042,7 +35042,7 @@ static void do_runahead(
          {
             if (!runahead_save_state(p_rarch))
             {
-               runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_SAVE_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+              // runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_SAVE_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                return;
             }
          }
@@ -35051,7 +35051,7 @@ static void do_runahead(
          {
             if (!runahead_load_state(p_rarch))
             {
-               runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_LOAD_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+             //  runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_LOAD_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
                return;
             }
          }
@@ -35064,7 +35064,7 @@ static void do_runahead(
       {
          secondary_core_destroy(p_rarch);
          p_rarch->runahead_secondary_core_available = false;
-         runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_CREATE_SECONDARY_INSTANCE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+         //runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_CREATE_SECONDARY_INSTANCE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          goto force_input_dirty;
       }
 
@@ -35080,13 +35080,13 @@ static void do_runahead(
 
          if (!runahead_save_state(p_rarch))
          {
-            runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_SAVE_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+          //  runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_SAVE_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             return;
          }
 
          if (!runahead_load_state_secondary(p_rarch))
          {
-            runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_LOAD_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+          //  runloop_msg_queue_push(msg_hash_to_str(MSG_RUNAHEAD_FAILED_TO_LOAD_STATE), 0, 3 * 60, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
             return;
          }
 
@@ -36661,13 +36661,13 @@ static void runloop_task_msg_queue_push(
    if (widgets_active && task->title && !task->mute)
    {
       RUNLOOP_MSG_QUEUE_LOCK();
-      ui_companion_driver_msg_queue_push(p_rarch, msg,
-            prio, task ? duration : duration * 60 / 1000, flush);
+    //  ui_companion_driver_msg_queue_push(p_rarch, msg,
+        //    prio, task ? duration : duration * 60 / 1000, flush);
 #ifdef HAVE_ACCESSIBILITY
       if (is_accessibility_enabled(p_rarch))
          accessibility_speak_priority(p_rarch, (char*)msg, 0);
 #endif
-      gfx_widgets_msg_queue_push(
+     /*gfx_widgets_msg_queue_push(
             &p_rarch->dispwidget_st,
             task,
             msg,
@@ -36682,12 +36682,12 @@ static void runloop_task_msg_queue_push(
 #else
             false
 #endif
-            );
+            );*/
       RUNLOOP_MSG_QUEUE_UNLOCK();
    }
-   else
+   //else
 #endif
-      runloop_msg_queue_push(msg, prio, duration, flush, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+      //runloop_msg_queue_push(msg, prio, duration, flush, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
 }
 
 /* Fetches core options path for current core/content
@@ -37681,7 +37681,7 @@ void runloop_msg_queue_push(const char *msg,
 #if defined(HAVE_GFX_WIDGETS)
    if (widgets_active)
    {
-      gfx_widgets_msg_queue_push(
+      /*gfx_widgets_msg_queue_push(
             &p_rarch->dispwidget_st,
             NULL,
             msg,
@@ -37696,7 +37696,7 @@ void runloop_msg_queue_push(const char *msg,
 #else
             false
 #endif
-            );
+            );*/
       duration = duration * 60 / 1000;
    }
    else
@@ -37705,17 +37705,17 @@ void runloop_msg_queue_push(const char *msg,
       if (flush)
          msg_queue_clear(p_rarch->runloop_msg_queue);
 
-      if (p_rarch->runloop_msg_queue)
+      /*if (p_rarch->runloop_msg_queue)
          msg_queue_push(p_rarch->runloop_msg_queue, msg,
                prio, duration,
-               title, icon, category);
+               title, icon, category);*/
 
       p_rarch->runloop_msg_queue_size = msg_queue_size(p_rarch->runloop_msg_queue);
    }
 
-   ui_companion_driver_msg_queue_push(p_rarch,
+   /*ui_companion_driver_msg_queue_push(p_rarch,
          msg,
-         prio, duration, flush);
+         prio, duration, flush);*/
 
    RUNLOOP_MSG_QUEUE_UNLOCK();
 }
@@ -37914,8 +37914,8 @@ static void update_savestate_slot(int state_slot)
          msg_hash_to_str(MSG_STATE_SLOT),
          state_slot);
 
-   runloop_msg_queue_push(msg, 2, 180, true, NULL,
-         MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+  /* runloop_msg_queue_push(msg, 2, 180, true, NULL,
+         MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);*/
 
    RARCH_LOG("%s\n", msg);
 }
@@ -38260,10 +38260,10 @@ static enum runloop_state runloop_check_state(
             rarch_environment_cb(
                   RETRO_ENVIRONMENT_GET_TARGET_REFRESH_RATE, &target_hz);
 
-            runloop_msg_queue_push(msg_hash_to_str(MSG_PRESS_AGAIN_TO_QUIT), 1,
+            /*runloop_msg_queue_push(msg_hash_to_str(MSG_PRESS_AGAIN_TO_QUIT), 1,
                   QUIT_DELAY_USEC * target_hz / 1000000,
                   true, NULL,
-                  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+                  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);*/
          }
       }
 
@@ -38740,8 +38740,8 @@ static enum runloop_state runloop_check_state(
             p_rarch->runloop_fastmotion
          )
       {
-         runloop_msg_queue_push(
-               msg_hash_to_str(MSG_FAST_FORWARD), 1, 1, false, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+       //  runloop_msg_queue_push(
+        //       msg_hash_to_str(MSG_FAST_FORWARD), 1, 1, false, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       }
    }
 
@@ -38792,7 +38792,7 @@ static enum runloop_state runloop_check_state(
    if (rcheevos_hardcore_active && rcheevos_state_loaded_flag)
    {
       rcheevos_hardcore_paused = true;
-      runloop_msg_queue_push(msg_hash_to_str(MSG_CHEEVOS_HARDCORE_MODE_DISABLED), 0, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(msg_hash_to_str(MSG_CHEEVOS_HARDCORE_MODE_DISABLED), 0, 180, true, NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
    }
 
    if (!rcheevos_hardcore_active)
@@ -38814,13 +38814,13 @@ static enum runloop_state runloop_check_state(
 #if defined(HAVE_GFX_WIDGETS)
       if (widgets_active)
          p_rarch->gfx_widgets_rewinding = rewinding;
-      else
+     // else
 #endif
-      {
-         if (rewinding)
-            runloop_msg_queue_push(s, 0, t, true, NULL,
-                  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
-      }
+      //{
+         //if (rewinding)
+          //  runloop_msg_queue_push(s, 0, t, true, NULL,
+                //  MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // }
    }
 #endif
 
@@ -38852,15 +38852,15 @@ static enum runloop_state runloop_check_state(
 #endif
          {
 #ifdef HAVE_REWIND
-            if (state_manager_frame_is_reversed())
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_SLOW_MOTION_REWIND), 1, 1, false, NULL,
-                     MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
-            else
+           // if (state_manager_frame_is_reversed())
+              // runloop_msg_queue_push(
+                  //   msg_hash_to_str(MSG_SLOW_MOTION_REWIND), 1, 1, false, NULL,
+                  //   MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+           // else
 #endif
-               runloop_msg_queue_push(
-                     msg_hash_to_str(MSG_SLOW_MOTION), 1, 1, false,
-                     NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+              // runloop_msg_queue_push(
+                   //  msg_hash_to_str(MSG_SLOW_MOTION), 1, 1, false,
+                 //    NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
          }
       }
 
@@ -39947,10 +39947,10 @@ bool create_folder_and_core_options(void)
 
    if (!retroarch_validate_game_options(game_path, sizeof(game_path), true))
    {
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_ERROR_SAVING_CORE_OPTIONS_FILE),
-            1, 100, true,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(
+           // msg_hash_to_str(MSG_ERROR_SAVING_CORE_OPTIONS_FILE),
+          //  1, 100, true,
+          //  NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       return false;
    }
 
@@ -39960,10 +39960,10 @@ bool create_folder_and_core_options(void)
 
    if (config_file_write(conf, game_path, true))
    {
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_CORE_OPTIONS_FILE_CREATED_SUCCESSFULLY),
-            1, 100, true,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(
+         //   msg_hash_to_str(MSG_CORE_OPTIONS_FILE_CREATED_SUCCESSFULLY),
+         //   1, 100, true,
+         //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       path_set(RARCH_PATH_CORE_OPTIONS, game_path);
    }
    config_file_free(conf);
