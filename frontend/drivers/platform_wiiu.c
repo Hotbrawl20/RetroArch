@@ -445,9 +445,20 @@ static void main_loop(void)
 {
    OSTime start_time;
    int status;
+   int procstatus;
 
    for (;;)
    {
+      procstatus = ProcUIProcessMessages(TRUE);
+      if (procstatus == PROCUI_STATUS_EXITING) 
+      {
+         break;
+      } 
+      else if (procstatus == PROCUI_STATUS_RELEASE_FOREGROUND) 
+      {
+         ProcUIDrawDoneRelease();
+      }
+
       if (video_driver_get_ptr(false))
       {
          start_time = OSGetSystemTime();

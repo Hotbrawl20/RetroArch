@@ -225,6 +225,8 @@ IMPORT_BEGIN(proc_ui);
 
 IMPORT(ProcUIInit);
 IMPORT(ProcUIShutdown);
+IMPORT(ProcUIProcessMessages);
+IMPORT(ProcUIDrawDoneRelease);
 
 IMPORT_END();
 
