@@ -377,7 +377,9 @@ static devoptab_t dotab_stdout =
 int main(int argc, char **argv)
 {
    main_setup();
-   get_arguments(&argc, &argv);
+
+   // TODO: find another way to get the args (if needed)
+   //get_arguments(&argc, &argv);
 
 #ifdef IS_SALAMANDER
    int salamander_main(int argc, char **argv);
