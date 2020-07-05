@@ -37705,10 +37705,10 @@ void runloop_msg_queue_push(const char *msg,
       if (flush)
          msg_queue_clear(p_rarch->runloop_msg_queue);
 
-      if (p_rarch->runloop_msg_queue)
+      /*if (p_rarch->runloop_msg_queue)
          msg_queue_push(p_rarch->runloop_msg_queue, msg,
                prio, duration,
-               title, icon, category);
+               title, icon, category);*/
 
       p_rarch->runloop_msg_queue_size = msg_queue_size(p_rarch->runloop_msg_queue);
    }
@@ -39947,10 +39947,10 @@ bool create_folder_and_core_options(void)
 
    if (!retroarch_validate_game_options(game_path, sizeof(game_path), true))
    {
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_ERROR_SAVING_CORE_OPTIONS_FILE),
-            1, 100, true,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(
+          //  msg_hash_to_str(MSG_ERROR_SAVING_CORE_OPTIONS_FILE),
+         //   1, 100, true,
+         //   NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       return false;
    }
 
@@ -39960,10 +39960,10 @@ bool create_folder_and_core_options(void)
 
    if (config_file_write(conf, game_path, true))
    {
-      runloop_msg_queue_push(
-            msg_hash_to_str(MSG_CORE_OPTIONS_FILE_CREATED_SUCCESSFULLY),
-            1, 100, true,
-            NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
+     // runloop_msg_queue_push(
+         //   msg_hash_to_str(MSG_CORE_OPTIONS_FILE_CREATED_SUCCESSFULLY),
+         //   1, 100, true,
+        //    NULL, MESSAGE_QUEUE_ICON_DEFAULT, MESSAGE_QUEUE_CATEGORY_INFO);
       path_set(RARCH_PATH_CORE_OPTIONS, game_path);
    }
    config_file_free(conf);
