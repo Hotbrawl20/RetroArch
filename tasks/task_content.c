@@ -505,7 +505,7 @@ static int64_t content_file_read(const char *path, void **buf, int64_t *length)
 
 int doesFileExists(const char *path)
 {
-    // Try to open file
+    /* Try to open file
     FILE *fptr = fopen(path, "r");
 
     // If file does not exists 
@@ -515,7 +515,16 @@ int doesFileExists(const char *path)
     // File exists hence close file and return true.
     fclose(fptr);
 
-    return 1;
+    return 1;*/
+  
+    //folder = "C:\\Users\\SaMaN\\Desktop\\Ppln";
+    struct stat sb;
+
+    if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode)) {
+       return 1;
+    } else {
+        retrun 0;
+    }
 }
 
 /**
@@ -561,20 +570,22 @@ static void content_load_init_wrap(
    secondpartofid[8] = '/';
    firstpartofid[9] = idstr[16];
    //split into 2 8 character pieces (please kill me)
-   char nandPath[49];
-   char usbPath[56];
-   char content[33];
+   char* nandPath[49];
+   char* usbPath[56];
+   char* content[26];
    content = firstpartofid;
    strcat(content, secondpartofid);
-   strcat(content, strdup("content/rom.bin"));
+   strcat(content, strdup("content/"));
    nandPath = strdup("nand:/usr/title/");
    usbPath = strdup("storage_usb:/usr/title/");
    strcat(nandPath, content);
    strcat(usbPath, content);
    if(doesFileExists(nandPath) == 1){ // check if on nand
+      strcat(nandPath,"rom.bin");
       args->content_path = nandPath;
    }else{
       if(doesFileExists(usbPath)) == 1){ //check if on usb
+      strcat(usbPath,"rom.bin");
       args->content_path = usbPath;
       }
    }
