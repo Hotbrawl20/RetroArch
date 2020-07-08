@@ -21,7 +21,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <string.h>
+
 #include <time.h>
 #include <errno.h>
 #include <unistd.h>
@@ -88,7 +88,7 @@
 #include <errno.h>
 #include "task_content.h"
 #include "tasks_internal.h"
-
+#include <string.h>
 #include "../command.h"
 #include "../core_info.h"
 #include "../content.h"
@@ -561,17 +561,16 @@ static void content_load_init_wrap(
    secondpartofid[8] = '/';
    firstpartofid[9] = idstr[16];
    //split into 2 8 character pieces (please kill me)
-   char nandPath;
-   char usbPath;
-   char content = strdup("content/rom.bin");
+   char nandPath[49];
+   char usbPath[56];
+   char content[33];
+   content = firstpartofid;
+   strcat(content, secondpartofid);
+   strcat(content, strdup("content/rom.bin"));
    nandPath = strdup("nand:/usr/title/");
    usbPath = strdup("storage_usb:/usr/title/");
-   strcat(nandPath,firstpartofid);
-   strcat(nandPath,secondpartofid);
-   strcat(nandPath,content);
-   strcat(usbPath,firstpartofid);
-   strcat(usbPath,secondpartofid);
-   strcat(usbPath,content);
+   strcat(nandPath, content);
+   strcat(usbPath, content);
    if(doesFileExists(nandPath) == 1){ // check if on nand
       args->content_path = nandPath;
    }else{
