@@ -205,7 +205,7 @@ void __mount_filesystems(void)
       fsaFd = IOSUHAX_FSA_Open();
       mount_fs("storage_usb", fsaFd, NULL, "/vol/storage_usb01");
       //since we mounted the usb why not also moun the nand?
-      mount_fs("nand", fsaFd, NULL, )
+      mount_fs("nand", fsaFd, NULL, "/vol/storage_mlc01" );
       return;
    } 
 #endif
