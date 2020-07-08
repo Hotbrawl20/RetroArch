@@ -24,7 +24,7 @@
 #include <string.h>
 #include <time.h>
 #include <errno.h>
-
+#include <unistd.h>
 #include <file/file_path.h>
 #include <queues/task_queue.h>
 #include <string/stdstring.h>
@@ -84,10 +84,11 @@
 #ifdef HAVE_CHEEVOS
 #include "../cheevos/cheevos.h"
 #endif
-
+#include <dirent.h>
+#include <errno.h>
 #include "task_content.h"
 #include "tasks_internal.h"
-#include ""
+
 #include "../command.h"
 #include "../core_info.h"
 #include "../content.h"
@@ -110,6 +111,9 @@
 
 #include "../network/discord.h"
 
+
+
+#include <sys/stat.h>
 /* TODO/FIXME - get rid of this public global */
 extern bool discord_is_inited;
 
@@ -499,6 +503,21 @@ static int64_t content_file_read(const char *path, void **buf, int64_t *length)
    return filestream_read_file(path, buf, length);
 }
 
+int doesFileExists(const char *path)
+{
+    // Try to open file
+    FILE *fptr = fopen(path, "r");
+
+    // If file does not exists 
+    if (fptr == NULL)
+        return 0;
+
+    // File exists hence close file and return true.
+    fclose(fptr);
+
+    return 1;
+}
+
 /**
  * content_load_init_wrap:
  * @args                 : Input arguments.
@@ -520,9 +539,48 @@ static void content_load_init_wrap(
    //args->content_path = strdup("sd:/rom.bin");
 
    //get titleid 
-   char id[18];
+   char id[19];
    sprintf(id, "%" PRIu64, OSGetTitleID()); //should put the id in the char array
-   //TODO: arr to string -> remove 0x at beginning -> split after the first 8 characters -> check if on usb or nand
+   id[18] = '\0';
+   char idstr[17];
+   for(int i = 0; i < 17; i++){
+   idstr[i] = idstr[i+2];
+   }
+  //removed 0x
+   
+   char firstpartofid[10];
+   for(int i = 0; i < 8; i++){
+   firstpartofid[i] = idstr[i];
+   }
+   firstpartofid[8] = '/';
+   firstpartofid[9] = idstr[16];
+    char secondpartofid[10];
+   for(int i = 0; i < 8; i++){
+   secondpartofid[i] = idstr[i+8];
+   }
+   secondpartofid[8] = '/';
+   firstpartofid[9] = idstr[16];
+   //split into 2 8 character pieces (please kill me)
+   char nandPath;
+   char usbPath;
+   char content = strdup("content/rom.bin");
+   nandPath = strdup("nand:/usr/title/");
+   usbPath = strdup("storage_usb:/usr/title/");
+   strcat(nandPath,firstpartofid);
+   strcat(nandPath,secondpartofid);
+   strcat(nandPath,content);
+   strcat(usbPath,firstpartofid);
+   strcat(usbPath,secondpartofid);
+   strcat(usbPath,content);
+   if(doesFileExists(nandPath) == 1){ // check if on nand
+      args->content_path = nandPath;
+   }else{
+      if(doesFileExists(usbPath)) == 1){ //check if on usb
+      args->content_path = usbPath;
+      }
+   }
+
+   //TODO:check if on usb or nand
    if (args->content_path)
    {
       RARCH_LOG("[CORE]: Using content: %s.\n", args->content_path);
