@@ -547,6 +547,9 @@ static void content_load_init_wrap(
    args->no_content = false;
    //args->content_path = strdup("sd:/rom.bin");
 
+
+
+//I HAVE NO CLUE IF THIS WORKS
    //get titleid 
    char id[19];
    sprintf(id, "%" PRIu64, OSGetTitleID()); //should put the id in the char array
@@ -589,8 +592,7 @@ static void content_load_init_wrap(
       args->content_path = usbPath;
       }
    }
-
-   //TODO:check if on usb or nand
+// END OF I HAVE NO CLUE IF THIS WORKS
    if (args->content_path)
    {
       RARCH_LOG("[CORE]: Using content: %s.\n", args->content_path);
