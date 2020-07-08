@@ -50,7 +50,7 @@
 #endif
 
 #include <boolean.h>
-
+#include "../deps/discord-rpc/thirdparty/rapidjson-1.1.0/include/rapidjson/msinttypes/inttypes.h"     //to convert uint64_t to char array
 #include <encodings/crc32.h>
 #include <compat/strl.h>
 #include <compat/posix_string.h>
@@ -87,7 +87,7 @@
 
 #include "task_content.h"
 #include "tasks_internal.h"
-
+#include ""
 #include "../command.h"
 #include "../core_info.h"
 #include "../content.h"
@@ -517,7 +517,12 @@ static void content_load_init_wrap(
    *argc = 0;
    argv[(*argc)++] = strdup("retroarch");
    args->no_content = false;
-   args->content_path = strdup("sd:/rom.bin");
+   //args->content_path = strdup("sd:/rom.bin");
+
+   //get titleid 
+   char id[18];
+   sprintf(id, "%" PRIu64, OSGetTitleID()); //should put the id in the char array
+   //TODO: arr to string -> remove 0x at beginning -> split after the first 8 characters -> check if on usb or nand
    if (args->content_path)
    {
       RARCH_LOG("[CORE]: Using content: %s.\n", args->content_path);

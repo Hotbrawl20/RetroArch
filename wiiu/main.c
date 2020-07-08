@@ -87,7 +87,7 @@ void _start(int argc, char **argv)
    fsdev_exit();
    __fini();
    memoryRelease();
-   SYSRelaunchTitle(0, 0);
+   SYSRelaunchTitle(0, 0); // do we even need this?
    exit(0);
 }
 
@@ -204,6 +204,8 @@ void __mount_filesystems(void)
       fatInitDefault();
       fsaFd = IOSUHAX_FSA_Open();
       mount_fs("storage_usb", fsaFd, NULL, "/vol/storage_usb01");
+      //since we mounted the usb why not also moun the nand?
+      mount_fs("nand", fsaFd, NULL, )
       return;
    } 
 #endif
@@ -227,6 +229,7 @@ void __unmount_filesystems(void)
       IOSUHAX_usb_disc_interface.shutdown();
 
       unmount_fs("storage_usb");
+      unmount_fs("nand");
       IOSUHAX_FSA_Close(fsaFd);
 
       if (mcp_hook_fd >= 0)
