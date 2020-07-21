@@ -18,7 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-
+//test edit
 #if defined(HAVE_IOSUHAX) && defined(HAVE_LIBFAT)
 #include <fat.h>
 #include <iosuhax.h>
@@ -30,15 +30,15 @@
 
 #include "fs/fs_utils.h"
 #include "fs/sd_fat_devoptab.h"
-
+//#include <coreinit/filesystem.h>
+//#include <wiiu/fs.h>
 #include "system/dynamic.h"
 #include "system/memory.h"
 #include "system/exception_handler.h"
-
 #include <wiiu/gx2.h>
 #include <wiiu/ios.h>
 #include <wiiu/kpad.h>
-#include <wiiu/os.h>
+//#include <wiiu/os.h>
 #include <wiiu/procui.h>
 #include <wiiu/sysapp.h>
 
@@ -87,7 +87,7 @@ void _start(int argc, char **argv)
    fsdev_exit();
    __fini();
    memoryRelease();
-   SYSRelaunchTitle(0, 0);
+   SYSRelaunchTitle(0, 0); // do we even need this?
    exit(0);
 }
 
@@ -195,6 +195,7 @@ static void try_shutdown_iosuhax(void)
  * The 'iosuhaxMount' symbol used here is public and can be referenced
  * in overriding implementations.
  */
+
 __attribute__((weak))
 void __mount_filesystems(void)
 {
@@ -204,8 +205,26 @@ void __mount_filesystems(void)
       fatInitDefault();
       fsaFd = IOSUHAX_FSA_Open();
       mount_fs("storage_usb", fsaFd, NULL, "/vol/storage_usb01");
+      //since we mounted the usb why not also moun the nand?
+      //mount_fs("nand", fsaFd, NULL, "/vol/storage_mlc01" );
       return;
    } 
+    /* get command and client */
+  //  void* pClient = malloc(sizeof(FSClient));
+ //   void* pCmd = malloc(sizeof(FSCmdBlock));
+
+//    if(!pClient || !pCmd) {
+ ////      if(pClient)
+  //          free(pClient);
+  //      if(pCmd)
+  //          free(pCmd);
+  //     return -2;
+    //}
+
+  //  FSInit();
+  //  FSInitCmdBlock(pCmd);
+  //  FSAddClient(pClient, -1);
+    //FSBindMount(pClient,pCmd,"/vol/content","content:/",0);
 #endif
    mount_sd_fat("sd");
 }
@@ -227,7 +246,12 @@ void __unmount_filesystems(void)
       IOSUHAX_usb_disc_interface.shutdown();
 
       unmount_fs("storage_usb");
-      IOSUHAX_FSA_Close(fsaFd);
+      // FSbindUnmount(pClient,pCmd,"content:/",0);
+    //   FSDelClient(pClient, -1);
+     //   free(pClient);
+   //     free(pCmd);
+   //  FSShutdown();
+     IOSUHAX_FSA_Close(fsaFd);
 
       if (mcp_hook_fd >= 0)
          MCPHookClose();

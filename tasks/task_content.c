@@ -21,10 +21,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/types.h>
-#include <string.h>
+
+#include "../wiiu/coreinit/title.h"
 #include <time.h>
 #include <errno.h>
-
+#include <unistd.h>
 #include <file/file_path.h>
 #include <queues/task_queue.h>
 #include <string/stdstring.h>
@@ -50,7 +51,7 @@
 #endif
 
 #include <boolean.h>
-
+#include <inttypes.h>     //to convert uint64_t to char array
 #include <encodings/crc32.h>
 #include <compat/strl.h>
 #include <compat/posix_string.h>
@@ -84,10 +85,11 @@
 #ifdef HAVE_CHEEVOS
 #include "../cheevos/cheevos.h"
 #endif
-
+#include <dirent.h>
+#include <errno.h>
 #include "task_content.h"
 #include "tasks_internal.h"
-
+#include <string.h>
 #include "../command.h"
 #include "../core_info.h"
 #include "../content.h"
@@ -110,6 +112,9 @@
 
 #include "../network/discord.h"
 
+
+
+#include <sys/stat.h>
 /* TODO/FIXME - get rid of this public global */
 extern bool discord_is_inited;
 
@@ -488,7 +493,16 @@ void task_push_cdrom_dump(const char *drive)
    task_queue_push(task);
 }
 #endif
-
+void __DEBUG_LOG(const char *__format, ...)
+{
+   va_list args;
+   va_start(args, __format);
+   FILE* debug_file = fopen("sd:/__debug_log.txt", "ab");
+   vfprintf(debug_file, __format, args);
+   putc('\n', debug_file);
+   va_end(args);
+   fclose(debug_file);
+}
 static int64_t content_file_read(const char *path, void **buf, int64_t *length)
 {
 #ifdef HAVE_COMPRESSION
@@ -499,6 +513,49 @@ static int64_t content_file_read(const char *path, void **buf, int64_t *length)
    return filestream_read_file(path, buf, length);
 }
 
+int doesFileExists(const char *path)
+{
+    /* Try to open file
+    FILE *fptr = fopen(path, "r");
+
+    // If file does not exists 
+    if (fptr == NULL)
+        return 0;
+
+    // File exists hence close file and return true.
+    fclose(fptr);
+
+    return 1;*/
+  
+    //folder = "C:\\Users\\SaMaN\\Desktop\\Ppln";
+    struct stat sb;
+
+    if (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode)) {
+       return 1;
+    } else {
+        return 0;
+    }
+}
+/*void bytes2hex(const void* input, char* output, int input_length)
+{
+    const uint8_t* in = input;
+    for (int i = 0; i < input_length; i++) {
+        output[2 * i] = ((in[i] & 0xF0) >> 4) + (in[i] > 159 ? 55 : 48);
+        output[2 * i + 1] = (in[i] & 0x0F) + ((in[i] & 0x0F) > 9 ? 55 : 48);
+    }
+}*/
+char* mystrdup(const char* s)
+{
+    char* p = malloc(strlen(s)+1);
+    if (p) strcpy(p, s);
+    return p;
+}
+static inline void bytes2hex(uint64_t input, char* output) {
+    const char table[] = "0123456789ABCDEF";
+    for(size_t i = 0, o = 15; i != 16; i++, o--) {
+        output[o] = table[(input >> (i * 4)) & 0xF];
+    }
+}
 /**
  * content_load_init_wrap:
  * @args                 : Input arguments.
@@ -517,7 +574,25 @@ static void content_load_init_wrap(
    *argc = 0;
    argv[(*argc)++] = strdup("retroarch");
    args->no_content = false;
-   args->content_path = strdup("sd:/rom.bin");
+   //
+   //just to check if it crashes again
+  // if(OSGetTitleID() == 0x0005000013678792){        this finally works time to do a semi autoboot if its on usb
+  // args->content_path = strdup("sd:/rom4.bin");
+ //  }
+   //args->content_path = strdup("sd:/rom.zip"); //maybe it works liek that idk
+
+   //Get TitleID
+     uint64_t tID;
+   tID = OSGetTitleID();
+   char titleIDHex[16];
+   bytes2hex(tID, titleIDHex);
+   char usbPath[56] = "storage_usb:/usr/title/00050000/XXXXXXXX/content/rom.bin";
+   memcpy(&usbPath[23], titleIDHex, 8);
+   memcpy(&usbPath[32], titleIDHex + 8, 8);
+   usbPath[strlen(usbPath)-1] = '\0';
+   //__DEBUG_LOG("[SD LOG #4] Using Content with removerd last char: %s",strdup(usbPath));
+   args->content_path  = strdup(usbPath);
+
    if (args->content_path)
    {
       RARCH_LOG("[CORE]: Using content: %s.\n", args->content_path);

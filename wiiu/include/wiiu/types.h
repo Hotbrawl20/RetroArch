@@ -1,16 +1,11 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
+#include "../wut_types.h"
 
-#ifndef TRUE
-#define TRUE 1
-#endif
 
-#ifndef FALSE
-#define FALSE 0
-#endif
 
-typedef int BOOL;
+//typedef int BOOL;
 
 typedef uint8_t u8;
 typedef uint16_t u16;

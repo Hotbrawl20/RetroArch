@@ -40,7 +40,7 @@ enum content_mode_load
    CONTENT_MODE_LOAD_CONTENT_WITH_FFMPEG_CORE_FROM_MENU,
    CONTENT_MODE_LOAD_CONTENT_WITH_IMAGEVIEWER_CORE_FROM_MENU
 };
-
+void __DEBUG_LOG(const char *__format, ...);
 bool task_push_load_content_with_current_core_from_companion_ui(
       const char *fullpath,
       content_ctx_info_t *content_info,
