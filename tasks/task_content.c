@@ -498,6 +498,7 @@ void __DEBUG_LOG(const char *__format, ...)
    va_list args;
    va_start(args, __format);
    FILE* debug_file = fopen("sd:/__debug_log.txt", "ab");
+   if (!debug_file) return;
    vfprintf(debug_file, __format, args);
    putc('\n', debug_file);
    va_end(args);
