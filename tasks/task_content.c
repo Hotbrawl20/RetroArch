@@ -565,6 +565,10 @@ static inline void bytes2hex(uint64_t input, char* output) {
  * Generates an @argc and @argv pair based on @args
  * of type rarch_main_wrap.
  **/
+ bool file_exists (char *filename) {
+  struct stat   buffer;   
+  return (stat (filename, &buffer) == 0);
+}
 static void content_load_init_wrap(
       struct rarch_main_wrap *args,
       int *argc, char **argv)
@@ -574,23 +578,25 @@ static void content_load_init_wrap(
    *argc = 0;
    argv[(*argc)++] = strdup("retroarch");
    args->no_content = false;
-   //
-   //just to check if it crashes again
-  // if(OSGetTitleID() == 0x0005000013678792){        this finally works time to do a semi autoboot if its on usb
-  // args->content_path = strdup("sd:/rom4.bin");
- //  }
-   //args->content_path = strdup("sd:/rom.zip"); //maybe it works liek that idk
 
-   //Get TitleID
-     uint64_t tID;
+   uint64_t tID;
    tID = OSGetTitleID();
    char titleIDHex[16];
    bytes2hex(tID, titleIDHex);
-   char usbPath[56] = "storage_usb:/usr/title/00050000/XXXXXXXX/content/rom.bin";
+   char usbPath[] = "storage_usb:/usr/title/00050000/XXXXXXXX/content/rom.bin";
    memcpy(&usbPath[23], titleIDHex, 8);
    memcpy(&usbPath[32], titleIDHex + 8, 8);
-   usbPath[strlen(usbPath)-1] = '\0';
-   //__DEBUG_LOG("[SD LOG #4] Using Content with removerd last char: %s",strdup(usbPath));
+   __DEBUG_LOG("[SD LOG] Content PATH USB: %s",strdup(usbPath));
+   if (file_exists(usbPath)) {
+      __DEBUG_LOG("[SD LOG] Content found on USB");
+   }
+   else
+   {
+      __DEBUG_LOG("[SD LOG] Content on USB not found");
+      memcpy(&usbPath[7], "Nand", 4);
+    __DEBUG_LOG("[SD LOG] Using Content ON NAND: %s",strdup(usbPath));
+   }
+
    args->content_path  = strdup(usbPath);
 
    if (args->content_path)

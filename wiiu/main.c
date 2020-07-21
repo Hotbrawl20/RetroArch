@@ -206,7 +206,7 @@ void __mount_filesystems(void)
       fsaFd = IOSUHAX_FSA_Open();
       mount_fs("storage_usb", fsaFd, NULL, "/vol/storage_usb01");
       //since we mounted the usb why not also moun the nand?
-      //mount_fs("nand", fsaFd, NULL, "/vol/storage_mlc01" );
+      mount_fs("storageNand", fsaFd, NULL, "/vol/storage_mlc01");
       return;
    } 
     /* get command and client */
@@ -246,6 +246,7 @@ void __unmount_filesystems(void)
       IOSUHAX_usb_disc_interface.shutdown();
 
       unmount_fs("storage_usb");
+      unmount_fs("storageNand");
       // FSbindUnmount(pClient,pCmd,"content:/",0);
     //   FSDelClient(pClient, -1);
      //   free(pClient);
