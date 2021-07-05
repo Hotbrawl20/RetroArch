@@ -444,7 +444,7 @@ static void main_teardown(void)
 static void main_loop(void)
 {
    OSTime start_time;
-   int status;
+   int status = 0;
    int procstatus;
 
    for (;;)
@@ -459,18 +459,23 @@ static void main_loop(void)
          ProcUIDrawDoneRelease();
       }
 
-      if (video_driver_get_ptr(false))
+      if (status != -1)
       {
-         start_time = OSGetSystemTime();
-         task_queue_wait(swap_is_pending, &start_time);
+         if (video_driver_get_ptr(false))
+         {
+            start_time = OSGetSystemTime();
+            task_queue_wait(swap_is_pending, &start_time);
+         }
+         else
+            task_queue_wait(NULL, NULL);
+
+         status = runloop_iterate();
+
+         if (status == -1)
+            SYSLaunchMenu();
       }
       else
          task_queue_wait(NULL, NULL);
-
-      status = runloop_iterate();
-
-      if (status == -1)
-         break;
    }
 }
 
